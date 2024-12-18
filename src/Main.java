@@ -53,17 +53,15 @@ public class Main {
 
 
         do{
-            // System.out.println("Enter social number: ");
-            // socialNumber = userInput.nextLine();
-            socialNumber = "8112189876";
+            System.out.println("Enter social number: ");
+            socialNumber = userInput.nextLine();
         }
         while(!validateSocialNumber(socialNumber));
 
+        String firstDigit = socialNumber.substring(0,6);
+        String lastDigit = socialNumber.substring(6);
+        socialNumber = firstDigit+"-"+lastDigit;
         System.out.println(socialNumber);
-
-
-
-
 
     }
 
@@ -112,20 +110,45 @@ public class Main {
             return false;
         }
     }
-    public static void checkLastDigit(String stringNumbers){
+    public static boolean checkLastDigit(String stringNumbers){
 
-        int[] nArray = new int[9];
-        int[] calculateArray = new int[9];
+        int[] tempArray = new int[stringNumbers.length() -1];
+        int[] calculateArray = new int[stringNumbers.length() -1];
+        StringBuilder tempString = new StringBuilder();
+        int calculateLstDigit = 0;
+        int lastDigit = 0;
+        int checkLastDigit = Integer.parseInt(String.valueOf(stringNumbers.charAt(stringNumbers.length()-1)));
+
         for (int i = 0; i < stringNumbers.length() -1; i++) {
-            nArray[i] = Integer.parseInt(String.valueOf(stringNumbers.charAt(i)));
+            tempArray[i] = Integer.parseInt(String.valueOf(stringNumbers.charAt(i)));
         }
-        for(int i = 0; i < nArray.length; i++){
+        for(int i = 0; i < tempArray.length; i++){
             if(i % 2 == 0){
-                calculateArray[i] = nArray[i]* 2;
+                calculateArray[i] = tempArray[i]* 2;
             } else {
-                calculateArray[i] = nArray[i];
+                calculateArray[i] = tempArray[i];
             }
         }
+
+        for (int number : calculateArray){
+            tempString.append(number);
+        }
+
+        for(int i = 0; i < tempString.length(); i++){
+            calculateLstDigit += Integer.parseInt(String.valueOf(tempString.charAt(i)));
+        }
+
+        if(calculateLstDigit % 10 != 0){
+            int closestTen = calculateLstDigit + (10 - calculateLstDigit % 10);
+            lastDigit = closestTen - calculateLstDigit;
+        }
+
+        if(checkLastDigit != lastDigit){
+            System.out.println("Not valid");
+            return false;
+        }
+
+        return true;
     }
 
     public static boolean validateName(String name){
@@ -170,12 +193,9 @@ public class Main {
 
     public static boolean validateSocialNumber(String socialNumber){
         if(checkDigits(socialNumber)) {
-            String firstDigit = socialNumber.substring(0,6);
-            String lastDigit = socialNumber.substring(6);
-            checkLastDigit(socialNumber);
-            socialNumber = firstDigit+"-"+lastDigit;
-            System.out.println(socialNumber);
-            return true;
+            if(checkLastDigit(socialNumber)){
+                return true;
+            }
         }
         return false;
     }
