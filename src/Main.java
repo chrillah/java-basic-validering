@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -52,8 +53,9 @@ public class Main {
 
 
         do{
-            System.out.println("Enter social number: ");
-            socialNumber = userInput.nextLine();
+            // System.out.println("Enter social number: ");
+            // socialNumber = userInput.nextLine();
+            socialNumber = "8112189876";
         }
         while(!validateSocialNumber(socialNumber));
 
@@ -92,7 +94,7 @@ public class Main {
 
     public static boolean checkDigits(String numbers){
         if(!checkForLetters(numbers)){
-return false;
+            return false;
         }
         if(numbers.length() != 10){
             System.out.println("Too short");
@@ -108,6 +110,21 @@ return false;
         catch (Exception e){
             System.out.println("No letters!");
             return false;
+        }
+    }
+    public static void checkLastDigit(String stringNumbers){
+
+        int[] nArray = new int[9];
+        int[] calculateArray = new int[9];
+        for (int i = 0; i < stringNumbers.length() -1; i++) {
+            nArray[i] = Integer.parseInt(String.valueOf(stringNumbers.charAt(i)));
+        }
+        for(int i = 0; i < nArray.length; i++){
+            if(i % 2 == 0){
+                calculateArray[i] = nArray[i]* 2;
+            } else {
+                calculateArray[i] = nArray[i];
+            }
         }
     }
 
@@ -155,6 +172,7 @@ return false;
         if(checkDigits(socialNumber)) {
             String firstDigit = socialNumber.substring(0,6);
             String lastDigit = socialNumber.substring(6);
+            checkLastDigit(socialNumber);
             socialNumber = firstDigit+"-"+lastDigit;
             System.out.println(socialNumber);
             return true;
