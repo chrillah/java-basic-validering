@@ -128,13 +128,13 @@ public class Main {
                     System.out.println("Enter first name: ");
                     fName = userInput.nextLine().trim();
                 }
-                while (!validateName(fName));
+                while (!validateName(fName, userInput));
                 System.out.println(fName);
                 do{
                     System.out.println("Enter last name: ");
                     lName = userInput.nextLine().trim();
                 }
-                while (!validateName(lName));
+                while (!validateName(lName, userInput));
                 System.out.println(lName);
                 answer = "N";
             }
@@ -274,6 +274,7 @@ public class Main {
         return true;
     }
 
+    /*
     public static boolean validateName(String name){
         int check = 0;
         if(!checkLength(name)){
@@ -289,6 +290,38 @@ public class Main {
             check++;
         }
         return check == 0;
+    }
+
+     */
+
+    public static boolean validateName(String name, Scanner userInput){
+        String answer = "";
+        String msg = "Continue? Y / N";
+        do{
+            try{
+                if(!checkLength(name)){
+                    System.out.println("Too short, must have at least 2 letters");
+                    System.out.println(msg);
+                    answer = userInput.nextLine();
+                }
+                if(!checkForNumbers(name)){
+                    System.out.println("No numbers, I don't care if you are Elon Snusk child");
+                    System.out.println(msg);
+                    answer = userInput.nextLine();
+                }
+                if(!checkForStreck(name)){
+                    System.out.println("What the heck! No streck!");
+                    System.out.println(msg);
+                    answer = userInput.nextLine();
+                }
+            }
+            catch (Exception e){
+                System.out.println("Use Y or N");
+            }
+        }while(!answer.equals("N"));
+
+        return answer.equals("N");
+
     }
 
     public static boolean validateAddress(String address){
