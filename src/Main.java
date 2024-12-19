@@ -115,7 +115,7 @@ public class Main {
         int[] tempArray = new int[stringNumbers.length() -1];
         int[] calculateArray = new int[stringNumbers.length() -1];
         StringBuilder tempString = new StringBuilder();
-        int calculateLstDigit = 0;
+        int calculateLastDigit = 0;
         int lastDigit = 0;
         int checkLastDigit = Integer.parseInt(String.valueOf(stringNumbers.charAt(stringNumbers.length()-1)));
 
@@ -135,12 +135,12 @@ public class Main {
         }
 
         for(int i = 0; i < tempString.length(); i++){
-            calculateLstDigit += Integer.parseInt(String.valueOf(tempString.charAt(i)));
+            calculateLastDigit += Integer.parseInt(String.valueOf(tempString.charAt(i)));
         }
 
-        if(calculateLstDigit % 10 != 0){
-            int closestTen = calculateLstDigit + (10 - calculateLstDigit % 10);
-            lastDigit = closestTen - calculateLstDigit;
+        if(calculateLastDigit % 10 != 0){
+            int closestTen = calculateLastDigit + (10 - calculateLastDigit % 10);
+            lastDigit = closestTen - calculateLastDigit;
         }
 
         if(checkLastDigit != lastDigit){
