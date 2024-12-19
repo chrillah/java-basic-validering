@@ -13,7 +13,33 @@ public class Main {
         String streetNumber;
         String socialNumber;
 
+        String[] personalInformation = new String[5];
+
         Scanner userInput = new Scanner(System.in);
+
+        int choice = 0;
+        do{
+            try {
+                System.out.println("LUHN - form");
+                System.out.println("Choose:");
+                System.out.println("1) Input personal information");
+                System.out.println("2) View personal information");
+                System.out.println("3) Exit LUHN");
+                choice = userInput.nextInt();
+
+                switch(choice){
+                    case 1 -> System.out.println("Good for you");
+                    case 2 -> display(personalInformation);
+                    case 3 -> System.out.println("Good bye");
+                    default -> System.out.println("Wrong input");
+                }
+            }
+            catch(Exception e) {
+                System.out.println("Wrong input");
+                userInput.nextLine();
+            }
+        }while(choice !=3 );
+
 
         /*
         do{
@@ -63,6 +89,30 @@ public class Main {
         socialNumber = format(socialNumber);
         System.out.println(socialNumber);
         */
+
+    }
+
+    public static void display(String[] personalInformation){
+        int check = 0;
+        if (personalInformation.length == 0){
+            System.out.println("Nothing to display");
+        }
+        else{
+            for (String information : personalInformation) {
+                if(information != null){
+                    System.out.println(information);
+                }
+                else{
+                    check++;
+                }
+            }
+        }
+        if(check>0){
+            System.out.println("Nothing to see");
+        }
+    }
+
+    public static void nameInput(){
 
     }
 
