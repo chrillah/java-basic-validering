@@ -7,11 +7,11 @@ public class Main {
     public static void main(String[] args){
 
         // Global variables
-        String fName;
-        String lName;
-        String address;
-        String streetNumber;
-        String socialNumber;
+        String fName = "";
+        String lName = "";
+        String address = "";
+        String streetNumber = "";
+        String socialNumber = "";
 
         String[] personalInformation = new String[5];
 
@@ -28,7 +28,7 @@ public class Main {
                 choice = userInput.nextInt();
 
                 switch(choice){
-                    case 1 -> System.out.println("Good for you");
+                    case 1 -> input(fName, lName, address, streetNumber, socialNumber, userInput);
                     case 2 -> display(personalInformation);
                     case 3 -> System.out.println("Good bye");
                     default -> System.out.println("Wrong input");
@@ -92,6 +92,14 @@ public class Main {
 
     }
 
+    public static void input(String fName, String lName, String adress, String streetNumber, String socialNumber, Scanner userInput){
+        userInput.nextLine();
+        nameInput(fName, lName, userInput);
+        addressInput(adress, userInput);
+        streetNumberInput(streetNumber, userInput);
+        socialNumberInput(socialNumber, userInput);
+    }
+
     public static void display(String[] personalInformation){
         int check = 0;
         if (personalInformation.length == 0){
@@ -112,8 +120,62 @@ public class Main {
         }
     }
 
-    public static void nameInput(){
+    public static void nameInput(String fName, String lName, Scanner userInput){
+        String answer = "";
+        do{
+            try {
+                do{
+                    System.out.println("Enter first name: ");
+                    fName = userInput.nextLine().trim();
+                }
+                while (!validateName(fName));
+                System.out.println(fName);
+                do{
+                    System.out.println("Enter last name: ");
+                    lName = userInput.nextLine().trim();
+                }
+                while (!validateName(lName));
+                System.out.println(lName);
+                answer = "N";
+            }
+            catch(Exception e) {
+                System.out.println("Wrong input");
+                System.out.println("Do it again? Y / N");
+                answer = userInput.nextLine();
+                userInput.nextLine();
+            }
+        }while(!answer.equals("N"));
+    }
 
+    public static void addressInput(String address, Scanner userInput){
+        do{
+            System.out.println("Enter street name");
+            address = userInput.nextLine();
+        }
+        while(!validateAddress(address));
+
+        System.out.println(address);
+    }
+
+    public static void streetNumberInput(String streetNumber, Scanner userInput){
+        do{
+            System.out.println("Enter street number");
+            streetNumber = userInput.nextLine().trim();
+        }
+        while(!validateStreetNumber(streetNumber));
+        System.out.println(streetNumber);
+    }
+
+    public static void socialNumberInput(String socialNumber, Scanner userInput){
+        do{
+            System.out.println("Enter social number: ");
+            socialNumber = userInput.nextLine();
+        }
+        while(!validateSocialNumber(socialNumber));
+
+
+        socialNumber = format(socialNumber);
+        System.out.println(socialNumber);
     }
 
     public static String format(String socialNumber){
