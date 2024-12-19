@@ -52,17 +52,24 @@ public class Main {
          */
 
 
+        /*
         do{
             System.out.println("Enter social number: ");
             socialNumber = userInput.nextLine();
         }
         while(!validateSocialNumber(socialNumber));
 
+
+        socialNumber = format(socialNumber);
+        System.out.println(socialNumber);
+        */
+
+    }
+
+    public static String format(String socialNumber){
         String firstDigit = socialNumber.substring(0,6);
         String lastDigit = socialNumber.substring(6);
-        socialNumber = firstDigit+"-"+lastDigit;
-        System.out.println(socialNumber);
-
+        return firstDigit+"-"+lastDigit;
     }
 
     public static boolean checkForStreck(String name){
@@ -94,8 +101,12 @@ public class Main {
         if(!checkForLetters(numbers)){
             return false;
         }
-        if(numbers.length() != 10){
+        if(numbers.length() < 10){
             System.out.println("Too short");
+            return false;
+        }
+        if(numbers.length() > 10){
+            System.out.println("Too long");
             return false;
         }
         return true;
