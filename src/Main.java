@@ -28,7 +28,10 @@ public class Main {
                 choice = userInput.nextInt();
 
                 switch(choice){
-                    case 1 -> input(fName, lName, address, streetNumber, socialNumber, userInput);
+                    case 1 -> {
+                        input();
+                        choice = 0;
+                    }
                     case 2 -> display(personalInformation);
                     case 3 -> System.out.println("Good bye");
                     default -> System.out.println("Wrong input");
@@ -36,7 +39,6 @@ public class Main {
             }
             catch(Exception e) {
                 System.out.println("Wrong input");
-                userInput.nextLine();
             }
         }while(choice !=3 );
 
@@ -92,12 +94,16 @@ public class Main {
 
     }
 
-    public static void input(String fName, String lName, String adress, String streetNumber, String socialNumber, Scanner userInput){
-        userInput.nextLine();
-        nameInput(fName, lName, userInput);
+    public static void input(){
+        String fName;
+        fName = nameInput();
+        System.out.println(fName);
+        /*
         addressInput(adress, userInput);
         streetNumberInput(streetNumber, userInput);
         socialNumberInput(socialNumber, userInput);
+
+         */
     }
 
     public static void display(String[] personalInformation){
@@ -120,31 +126,31 @@ public class Main {
         }
     }
 
-    public static void nameInput(String fName, String lName, Scanner userInput){
-        String answer = "";
-        do{
-            try {
-                do{
-                    System.out.println("Enter first name: ");
-                    fName = userInput.nextLine().trim();
+    public static String nameInput() {
+        Scanner userInput = new Scanner(System.in);
+        String name;
+        String answer ="";
+        boolean isRunning = true;
+
+        do {
+            System.out.println("Enter name: ");
+            name = userInput.nextLine();
+
+            if (!validateName(name)) {
+                System.out.println("Continue? Y / N");
+                answer = userInput.nextLine().toUpperCase();
+                if(answer.equals("N")){
+                    isRunning = false;
                 }
-                while (!validateName(fName, userInput));
-                System.out.println(fName);
-                do{
-                    System.out.println("Enter last name: ");
-                    lName = userInput.nextLine().trim();
-                }
-                while (!validateName(lName, userInput));
-                System.out.println(lName);
-                answer = "N";
+                continue;
             }
-            catch(Exception e) {
-                System.out.println("Wrong input");
-                System.out.println("Do it again? Y / N");
-                answer = userInput.nextLine();
-                userInput.nextLine();
-            }
-        }while(!answer.equals("N"));
+
+            isRunning =! validateName(name);
+
+        } while (isRunning);
+
+        //userInput.close();
+        return name;
     }
 
     public static void addressInput(String address, Scanner userInput){
@@ -274,13 +280,14 @@ public class Main {
         return true;
     }
 
-    /*
+
     public static boolean validateName(String name){
         int check = 0;
         if(!checkLength(name)){
             System.out.println("Too short, must have at least 2 letters");
             check++;
         }
+
         if(!checkForNumbers(name)){
             System.out.println("No numbers, I don't care if you are Elon Snusk child");
             check++;
@@ -292,37 +299,46 @@ public class Main {
         return check == 0;
     }
 
-     */
 
+
+    /*
     public static boolean validateName(String name, Scanner userInput){
         String answer = "";
         String msg = "Continue? Y / N";
         do{
             try{
                 if(!checkLength(name)){
+                    userInput.nextLine();
                     System.out.println("Too short, must have at least 2 letters");
                     System.out.println(msg);
                     answer = userInput.nextLine();
+                    System.out.println(answer);
                 }
                 if(!checkForNumbers(name)){
+                    userInput.nextLine();
                     System.out.println("No numbers, I don't care if you are Elon Snusk child");
                     System.out.println(msg);
                     answer = userInput.nextLine();
+                    System.out.println(answer);
                 }
                 if(!checkForStreck(name)){
+                    userInput.nextLine();
                     System.out.println("What the heck! No streck!");
                     System.out.println(msg);
                     answer = userInput.nextLine();
+                    System.out.println(answer);
                 }
             }
             catch (Exception e){
+                userInput.nextLine();
                 System.out.println("Use Y or N");
             }
         }while(!answer.equals("N"));
 
-        return answer.equals("N");
-
+        return name;
     }
+
+     */
 
     public static boolean validateAddress(String address){
         int check = 0;
